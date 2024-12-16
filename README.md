@@ -1,12 +1,15 @@
-## **_Website_**:[https://durgaappointapp.ccbp.tech/](https://durgaappointapp.ccbp.tech/)🔗
+## **_Website_**:[https://durgamoneymager.ccbp.tech/](https://durgamoneymager.ccbp.tech/)🔗
 
-In this project, let's build an **Appointments App** by applying the concepts we have learned till now.
+
+
+
+In this project, let's build a **Money Manager** app by applying the concepts we have learned till now.
 
 ### Refer to the image below:
 
 <br/>
 <div style="text-align: center;">
-    <img src="https://assets.ccbp.in/frontend/content/react-js/appointments-app-output.gif" alt="appointments app output" style="max-width:70%;box-shadow:0 2.8px 2.2px rgba(0, 0, 0, 0.12)">
+    <img src="https://assets.ccbp.in/frontend/content/react-js/money-manager-output.gif" alt="money manager output gif" style="max-width:70%;box-shadow:0 2.8px 2.2px rgba(0, 0, 0, 0.12)">
 </div>
 <br/>
 
@@ -15,8 +18,8 @@ In this project, let's build an **Appointments App** by applying the concepts we
 <details>
 <summary>Click to view</summary>
 
-- [Extra Small (Size < 576px) and Small (Size >= 576px)](https://assets.ccbp.in/frontend/content/react-js/appointments-app-sm-output-v2.png)
-- [Medium (Size >= 768px), Large (Size >= 992px) and Extra Large (Size >= 1200px)](https://assets.ccbp.in/frontend/content/react-js/appointments-app-lg-output.png)
+- [Extra Small (Size < 576px) and Small (Size >= 576px)](https://assets.ccbp.in/frontend/content/react-js/money-manager-sm-output-v2.png)
+- [Medium (Size >= 768px), Large (Size >= 992px) and Extra Large (Size >= 1200px)](https://assets.ccbp.in/frontend/content/react-js/money-manager-lg-output.png)
 
 </details>
 
@@ -37,14 +40,35 @@ In this project, let's build an **Appointments App** by applying the concepts we
 
 The app must have the following functionalities
 
-- Initially, the list of appointments should be empty and the title input and date input should be empty
-- When non-empty values are provided for title and date and the **Add** button is clicked,
-  - A new appointment should be added to the list of appointments
-  - The value inside the input elements for title and date should be updated to their initial values
-- When the **Star** on an appointment is clicked, the appointment should be starred
-- The status of the **Starred** filter is updated by clicking on it
-- When the **Starred** filter is active, all the starred appointments should be filtered and displayed
-- When the **Starred** filter is inactive, the list of all appointments should be displayed
+- Initially, Balance Amount, Income Amount, and Expenses Amount should be `0`
+- Balance Amount should be calculated by removing the Expenses Amount from the Income Amount in the list of transactions
+- Income Amount should be calculated by removing the Expenses Amount in the list of transactions
+- Expenses Amount should be calculated by adding only Expenses Amount in the list of transactions
+- The `MoneyManager` component is provided with `transactionTypeOptions`. It consists of a list of transaction type objects with the following properties in each object
+
+  |     Key     | Data Type |
+  | :---------: | :-------: |
+  |  optionId   |  String   |
+  | displayText |  String   |
+
+- Initially, the value of the `titleInput` should be empty
+- Initially, the value of the `amountInput` should be empty
+- Initially, the first option in the list should be selected
+- When a transaction is added, by providing the values in the `titleInput`, `amountInput` and `optionId` and **Add** button is clicked,
+
+  - A new transaction should be added to the transaction history list
+  - `totalBalance`, `totalIncome` and `totalExpenses` should be updated accordingly
+
+    ```
+    totalBalance = totalIncome - totalExpenses
+    ```
+
+  - After updating, the values in the `titleInput`,`amountInput` and `optionId` will be updated to their initial values
+
+- When the delete button in the transaction history is clicked,
+  - The respective transaction should be deleted from the transaction history list
+  - `totalBalance`, `totalIncome` and `totalExpenses` should be updated accordingly
+
 </details>
 
 <details>
@@ -52,7 +76,7 @@ The app must have the following functionalities
 
 <br/>
 <div style="text-align: center;">
-    <img src="https://assets.ccbp.in/frontend/content/react-js/appointments-app-component-breakdown-structure.png" alt="component structure" style="max-width:100%;box-shadow:0 2.8px 2.2px rgba(0, 0, 0, 0.12)">
+    <img src="https://assets.ccbp.in/frontend/content/react-js/money-manager-component-structure-breakdown.png" alt="component breakdown structure" style="max-width:100%;box-shadow:0 2.8px 2.2px rgba(0, 0, 0, 0.12)">
 </div>
 <br/>
 
@@ -64,32 +88,13 @@ The app must have the following functionalities
 
 Use these files to complete the implementation:
 
-- `src/components/Appointments/index.js`
-- `src/components/Appointments/index.css`
-- `src/components/AppointmentItem/index.js`
-- `src/components/AppointmentItem/index.css`
-</details>
-
-### Quick Tips
-
-<details>
-<summary>Click to view</summary>
-<br>
-
-- The HTML input element with the type `date` is designed for the user to select the date from a date picker
-
-  ```jsx
-  <input type="date" />
-  ```
-
-- The `format` function in the date-fns package can be used to get the formatted date string in the given format
-
-  ```jsx
-  import {format} from 'date-fns'
-
-  console.log(format(new Date(2021, 19, 07), 'dd MMMM yyyy, EEEE')) // 19 July 2021, Monday
-  ```
-
+- `src/App.js`
+- `src/components/MoneyManager/index.js`
+- `src/components/MoneyManager/index.css`
+- `src/components/MoneyDetails/index.js`
+- `src/components/MoneyDetails/index.css`
+- `src/components/TransactionItem/index.js`
+- `src/components/TransactionItem/index.css`
 </details>
 
 ### Important Note
@@ -101,9 +106,10 @@ Use these files to complete the implementation:
 
 **The following instructions are required for the tests to pass**
 
-- For the `format` function, pass the format string `dd MMMM yyyy, EEEE` as the second argument
-- The star button in each appointment should have the data-testid as **star**
-- The star image in each appointment should have alt as **star**
+- The Balance Amount should have the data-testid as **balanceAmount**
+- The Income Amount should have the data-testid as **incomeAmount**
+- The Expenses Amount should have the data-testid as **expensesAmount**
+- The Delete button for each transaction should have the data-testid as **delete**
 
 </details>
 
@@ -112,9 +118,11 @@ Use these files to complete the implementation:
 <details>
 <summary>Image URLs</summary>
 
-- [https://assets.ccbp.in/frontend/react-js/appointments-app/appointments-img.png](https://assets.ccbp.in/frontend/react-js/appointments-app/appointments-img.png) alt should be **appointments**
-- [https://assets.ccbp.in/frontend/react-js/appointments-app/star-img.png](https://assets.ccbp.in/frontend/react-js/appointments-app/star-img.png)
-- [https://assets.ccbp.in/frontend/react-js/appointments-app/filled-star-img.png](https://assets.ccbp.in/frontend/react-js/appointments-app/filled-star-img.png)
+- [https://assets.ccbp.in/frontend/react-js/money-manager/money-manager-bg.png](https://assets.ccbp.in/frontend/react-js/money-manager/money-manager-bg.png)
+- [https://assets.ccbp.in/frontend/react-js/money-manager/balance-image.png](https://assets.ccbp.in/frontend/react-js/money-manager/balance-image.png) alt should be **balance**
+- [https://assets.ccbp.in/frontend/react-js/money-manager/income-image.png](https://assets.ccbp.in/frontend/react-js/money-manager/income-image.png) alt should be **income**
+- [https://assets.ccbp.in/frontend/react-js/money-manager/expenses-image.png](https://assets.ccbp.in/frontend/react-js/money-manager/expenses-image.png) alt should be **expenses**
+- [https://assets.ccbp.in/frontend/react-js/money-manager/delete.png](https://assets.ccbp.in/frontend/react-js/money-manager/delete.png) alt should be **delete**
 
 </details>
 
@@ -123,13 +131,20 @@ Use these files to complete the implementation:
 
 <br/>
 
-<div style="background-color: #9796f0; width: 150px; padding: 10px; color: black">Hex: #9796f0</div>
-<div style="background-color: #fbc7d4; width: 150px; padding: 10px; color: black">Hex: #fbc7d4</div>
+<div style="background-color: #475569; width: 150px; padding: 10px; color: white">Hex: #475569</div>
+<div style="background-color: #0b69ff; width: 150px; padding: 10px; color: white">Hex: #0b69ff</div>
+<div style="background-color: #ecfccb; width: 150px; padding: 10px; color: black">Hex: #ecfccb</div>
+<div style="background-color: #84cc16; width: 150px; padding: 10px; color: black">Hex: #84cc16</div>
+<div style="background-color: #cffafe; width: 150px; padding: 10px; color: black">Hex: #cffafe</div>
+<div style="background-color: #06b6d4; width: 150px; padding: 10px; color: black">Hex: #06b6d4</div>
+<div style="background-color: #ede9fe; width: 150px; padding: 10px; color: black">Hex: #ede9fe</div>
+<div style="background-color: #7c3aed; width: 150px; padding: 10px; color: white">Hex: #7c3aed</div>
+<div style="background-color: #cbd5e1; width: 150px; padding: 10px; color: black">Hex: #cbd5e1</div>
+<div style="background-color: #7e858e; width: 150px; padding: 10px; color: black">Hex: #7e858e</div>
 <div style="background-color: #ffffff; width: 150px; padding: 10px; color: black">Hex: #ffffff</div>
-<div style="background-color: #171f46; width: 150px; padding: 10px; color: white">Hex: #171f46</div>
-<div style="background-color: #8b5cf6; width: 150px; padding: 10px; color: black">Hex: #8b5cf6</div>
-<div style="background-color: #b5b7c4; width: 150px; padding: 10px; color: black">Hex: #b5b7c4</div>
-<div style="background-color: #9897f0; width: 150px; padding: 10px; color: black">Hex: #9897f0</div>
+<div style="background-color: #1e293b; width: 150px; padding: 10px; color: white">Hex: #1e293b</div>
+<div style="background-color: #d7dfe9; width: 150px; padding: 10px; color: black">Hex: #d7dfe9</div>
+<div style="background-color: #334155; width: 150px; padding: 10px; color: white">Hex: #334155</div>
 
 </details>
 
